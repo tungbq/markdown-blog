@@ -9,9 +9,15 @@
 </head>
 <body>
   <div class="container">
-    <!-- <h1>aaaaa</h1> -->
-    <!-- <h1 class="mb-4">aaa</h1> -->
     <h1 class="mb-4"><%=article.title%></h1>
+    <div class="text-muted mb-2"><%= article.createdAt.toLocaleDateString() %></div>
+
+    <a href="/" class="btn btn-secondary">All Articles</a>
+    <a href="/articles/edit/<%= article.slug%>" class="btn btn-info">Edit</a>
+
+    <div class="mt-2">
+      <%= article.markdown%>
+    </div>
   </div>
 </body>
 </html>

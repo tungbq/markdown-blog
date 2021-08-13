@@ -6,8 +6,8 @@ router.get('/new', (req, res) => {
   res.render('articles/new', { article: new Article() })
 })
 
-router.get('/:id',  async (req, res) => {
-  const article = await Article.findById(req.params.id)
+router.get('/:slug',  async (req, res) => {
+  const article = await Article.findOne({ slug: req.params.slug })
   
   if (article == null) res.redirect('/')
 
@@ -23,11 +23,17 @@ router.post('/', async (req, res) => {
 
   try {
     update_article = await article.save()
-    res.redirect(`/articles/${update_article.id}`)
+    res.redirect(`/articles/${update_article.slug}`)
   } catch(err) {
     console.log(err)
     res.render('articles/new', { article: update_article })
   }
+})
+
+// We only have GET/POST on a form, so need a lib name 'method-override'
+router.delete('/:id', async (req, res) => {
+  await Article.findByIdAndDelete(req.params.id)
+  res.redirect('/')
 })
 
 module.exports = router
