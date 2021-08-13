@@ -31,6 +31,8 @@ router.post('/', async (req, res) => {
 })
 
 // We only have GET/POST on a form, so need a lib name 'method-override'
+// See: app.use(methodOveride('_method')) in server.js for more details.
+
 router.delete('/:id', async (req, res) => {
   await Article.findByIdAndDelete(req.params.id)
   res.redirect('/')
