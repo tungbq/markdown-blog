@@ -1,4 +1,5 @@
 const express = require('express')
+const { findByIdAndUpdate } = require('../models/article')
 const Article = require('../models/article')
 const router = express.Router()
 
@@ -35,6 +36,27 @@ router.post('/', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   await Article.findByIdAndDelete(req.params.id)
+  res.redirect('/')
+})
+
+router.get('/edit/:slug', async (req, res) => {
+  const article = await Article.findOne({ slug: req.params.slug })
+
+  res.render('articles/edit', {article: article})
+})
+
+router.put('/edit/:id', async (req, res) => {
+  let article = {
+    title: req.body.title,
+    description: req.body.description,
+    markdown: req.body.markdown
+  }
+
+  try {
+    await Article.findByIdAndUpdate(req.params.id, article)
+  } catch(err) {
+    console.log(err)
+  }
   res.redirect('/')
 })
 
