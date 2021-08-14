@@ -1,5 +1,4 @@
 const express = require('express')
-const { findByIdAndUpdate } = require('../models/article')
 const Article = require('../models/article')
 const router = express.Router()
 
