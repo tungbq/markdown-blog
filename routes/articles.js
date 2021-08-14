@@ -53,11 +53,12 @@ router.put('/edit/:id', async (req, res) => {
   }
 
   try {
-    await Article.findByIdAndUpdate(req.params.id, article)
+    const updated_article = await Article.findByIdAndUpdate(req.params.id, article)
+    res.redirect(`/articles/${updated_article.slug}`)
   } catch(err) {
     console.log(err)
+    res.redirect('/')
   }
-  res.redirect('/')
 })
 
 module.exports = router
